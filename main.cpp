@@ -7,7 +7,7 @@ const float WIDTH = 800, HEIGHT = 650;
 
 Creature creature(Vector2{WIDTH / 2, HEIGHT / 2});
 
-sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "AI evolution experiment #1");
+sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "AI evolution experiment 1");
 
 std::vector<Bullet> bullets;
 
@@ -40,7 +40,7 @@ void update()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         creature.setPosition(mousepos);
     
-    if (rin(1) > 0.98) {
+    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::R) && rin(1) > 0.95) {
         for (Bullet b : bullets) {
             if (!isOnScreen(b.getPosition())) {
                 b.setPosition(Vector2{rin(WIDTH), 1});

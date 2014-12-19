@@ -11,6 +11,10 @@
 
 #include "Neuron.h"
 
+typedef std::vector<Neuron> Layer;
+
+// Brain objects are designed to be copied
+
 class Brain {
 public:
     Brain(int numInputNeurons, int numOutputNeurons);
@@ -23,13 +27,14 @@ public:
     void fireExcitedNeurons();
     
 private:
-    std::vector<Neuron*> inputNeurons, outputNeurons;
+    Layer inputNeurons, outputNeurons;
     
-    const int DEFAULT_NEURONS_PER_LAYER = 17;
-    const int DEFAULT_LAYER_COUNT = 7;
+    static const int DEFAULT_NEURONS_PER_LAYER = 60;
+    static const int DEFAULT_LAYER_COUNT = 4;
     
-    std::vector<std::vector<Neuron*>> layers;
+    std::vector<Layer> layers;
     
+    void deliverImpulsesFrom(Neuron n);
 };
 
 #endif /* defined(__AI_EVO_1__Brain__) */

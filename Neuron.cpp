@@ -10,29 +10,26 @@
 
 Neuron::Neuron(int threshold)
 {
+    std::cout << threshold << std::endl;
     this->threshold = threshold;
 }
 
 Neuron::Neuron()
 {
-    Neuron((int) rin(20));
+    Neuron((int) rin(6) + 1);
 }
 
 Neuron::~Neuron() {}
 
-void Neuron::setActionOnFire(Action onFire)
+void Neuron::setActionOnFire(Action action)
 {
-    this->onFire = onFire;
+    this->action = action;
 }
 
 void Neuron::fire()
 {
-    for (Neuron *receiver : receivingNeurons) {
-        receiver->receiveImpulse();
-    }
-    
     impulses = 0;
-    onFire();
+    action();
 }
 
 void Neuron::receiveImpulse()
@@ -40,13 +37,21 @@ void Neuron::receiveImpulse()
     impulses++;
 }
 
-void Neuron::attemptFire()
+bool Neuron::tryFire()
 {
-    if (impulses > threshold)
+    if (impulses > threshold) {
         fire();
+        return true;
+    }
+    return false;
 }
 
-void Neuron::addReceivingNeuron(Neuron *n)
+void Neuron::addRecipientNeuron(Cell address)
 {
-    receivingNeurons.push_back(n);
+    recipientNeuronAddresses.push_back(address);
+}
+
+std::vector<Cell> Neuron::getRecipientNeuronAddresses() const
+{
+    return recipientNeuronAddresses;
 }

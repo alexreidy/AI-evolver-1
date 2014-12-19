@@ -28,4 +28,9 @@ typedef sf::Vector2<float> Vector2;
 
 float calcDistanceBetween(Vector2 a, Vector2 b);
 
+class Cell {
+public:
+    int row, col;
+};
+
 #endif /* defined(__AI_EVO_1__util__) */

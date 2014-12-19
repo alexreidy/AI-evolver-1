@@ -22,18 +22,20 @@ public:
     
     void fire();
     
-    void setActionOnFire(Action onFire);
+    void setActionOnFire(Action action);
     
-    void addReceivingNeuron(Neuron *n);
+    void addRecipientNeuron(Cell address);
+    std::vector<Cell> getRecipientNeuronAddresses() const;
     
-    void attemptFire();
+    // Returns true if it fires
+    bool tryFire();
     
 private:
-    std::vector<Neuron*> receivingNeurons;
+    std::vector<Cell> recipientNeuronAddresses;
     
-    int threshold, impulses;
+    int threshold = 2, impulses = 0;
     
-    Action onFire = []() {};
+    Action action = []() {};
     
 };
 

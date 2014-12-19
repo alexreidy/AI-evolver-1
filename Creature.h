@@ -27,9 +27,7 @@ public:
     Vector2 mpos, closestBulletPos;
     
 private:
-    Brain *brain;
-    
-    std::vector<Neuron*> inputNeurons, outputNeurons;
+    Brain brain = Brain(10, 8);
     
     int hp = 100;
 };

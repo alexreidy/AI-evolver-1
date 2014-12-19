@@ -16,21 +16,19 @@ Creature::Creature(Vector2 position)
     
     setPosition(Vector2{450, 300});
     
-    brain = new Brain(10, 4); // TODO make brain member var a value, not ptr
-    
-    brain->setActionForOutputNeuron(0, [this]() {
+    brain.setActionForOutputNeuron(0, [this]() {
         move(-1, 0);
     });
     
-    brain->setActionForOutputNeuron(1, [this]() {
+    brain.setActionForOutputNeuron(1, [this]() {
         move(0, -1);
     });
     
-    brain->setActionForOutputNeuron(0, [this]() {
+    brain.setActionForOutputNeuron(2, [this]() {
         move(1, 0);
     });
     
-    brain->setActionForOutputNeuron(0, [this]() {
+    brain.setActionForOutputNeuron(3, [this]() {
         move(0, 1);
     });
     
@@ -40,20 +38,22 @@ Creature::~Creature() {}
 
 void Creature::update()
 {
-    if (closestBulletPos.x > getPosition().x)
-        brain->fireInputNeuron(0);
-    if (closestBulletPos.x < getPosition().x)
-        brain->fireInputNeuron(1);
-    if (closestBulletPos.y > getPosition().y)
-        brain->fireInputNeuron(2);
-    if (closestBulletPos.y < getPosition().y)
-        brain->fireInputNeuron(3);
-    
-    if (calcDistanceBetween(getPosition(), closestBulletPos) < 30) {
-        brain->fireInputNeuron(4);
+    if (closestBulletPos.x > 0) {
+        if (closestBulletPos.x > getPosition().x)
+            brain.fireInputNeuron(0);
+        if (closestBulletPos.x < getPosition().x)
+            brain.fireInputNeuron(1);
+        if (closestBulletPos.y > getPosition().y)
+            brain.fireInputNeuron(2);
+        if (closestBulletPos.y < getPosition().y)
+            brain.fireInputNeuron(3);
+        
+        if (calcDistanceBetween(getPosition(), closestBulletPos) < 30) {
+            brain.fireInputNeuron(4);
+        }
     }
     
-    brain->fireExcitedNeurons();
+    brain.fireExcitedNeurons();
 }
 
 void Creature::changeHp(int change)
