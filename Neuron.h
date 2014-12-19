@@ -27,8 +27,12 @@ public:
     void addRecipientNeuron(Cell address);
     std::vector<Cell> getRecipientNeuronAddresses() const;
     
+    void removeRandomRecipient();
+    
     // Returns true if it fires
     bool tryFire();
+    
+    void changeThreshold(int change);
     
 private:
     std::vector<Cell> recipientNeuronAddresses;

@@ -17,19 +17,19 @@ Creature::Creature(Vector2 position)
     setPosition(Vector2{450, 300});
     
     brain.setActionForOutputNeuron(0, [this]() {
-        move(-1, 0);
+        move(-3, 0);
     });
     
     brain.setActionForOutputNeuron(1, [this]() {
-        move(0, -1);
+        move(0, -3);
     });
     
     brain.setActionForOutputNeuron(2, [this]() {
-        move(1, 0);
+        move(3, 0);
     });
     
     brain.setActionForOutputNeuron(3, [this]() {
-        move(0, 1);
+        move(0, 3);
     });
     
 }
@@ -58,10 +58,10 @@ void Creature::update()
 
 void Creature::changeHp(int change)
 {
-    int chp = hp + change;
-    if (chp > 0 && chp <= 100) {
-        hp = chp;
-    }
+    int nhp = hp + change;
+    if (nhp > 100) { hp = 100; return; }
+    if (nhp < 0) { hp = 0; return; }
+    hp = nhp;
 }
 
 int Creature::getHp() const

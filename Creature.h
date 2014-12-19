@@ -17,6 +17,8 @@ public:
     Creature(Vector2 position);
     ~Creature();
     
+    Brain brain = Brain(10, 8);
+    
     void update();
     
     void changeHp(int change);
@@ -27,7 +29,6 @@ public:
     Vector2 mpos, closestBulletPos;
     
 private:
-    Brain brain = Brain(10, 8);
     
     int hp = 100;
 };

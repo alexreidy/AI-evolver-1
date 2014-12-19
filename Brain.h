@@ -23,14 +23,16 @@ public:
     void setActionForOutputNeuron(int index, Action action);
     
     void fireInputNeuron(int index);
-        
+    
     void fireExcitedNeurons();
+    
+    void mutate();
     
 private:
     Layer inputNeurons, outputNeurons;
     
-    static const int DEFAULT_NEURONS_PER_LAYER = 60;
-    static const int DEFAULT_LAYER_COUNT = 4;
+    static const int DEFAULT_NEURONS_PER_LAYER = 75;
+    static const int DEFAULT_LAYER_COUNT = 3;
     
     std::vector<Layer> layers;
     

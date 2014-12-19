@@ -42,14 +42,9 @@ Brain::Brain(int numInputNeurons, int numOutputNeurons)
             for (int b = 0; b < layers[l + 1].size(); b++) {
                 if (rin(1) > 0.9) {
                     layers[l][a].addRecipientNeuron(Cell{l+1, b});
-                    std::cout << "(" << l << "," << a << ") added recipient (" << l+1 << "," << b << ")\n";
                 }
             }
         }
-    }
-    return;
-    for (int i = 0; i < numOutputNeurons; i++) {
-        layers[0][i].addRecipientNeuron(Cell{(int)layers.size()-1, i});
     }
     
 }
@@ -78,7 +73,6 @@ void Brain::fireInputNeuron(int index)
 
 void Brain::fireExcitedNeurons()
 {
-    
     for (Layer &layer : layers) {
         for (Neuron &n : layer) {
             if (n.tryFire()) {
@@ -86,12 +80,27 @@ void Brain::fireExcitedNeurons()
             }
         }
     }
-    
-    return;
-    for (int l = 0; l < layers.size(); l++) {
-        for (int n = 0; n < layers[l].size(); n++) {
-            if (layers[l][n].tryFire()) {
-                deliverImpulsesFrom(layers[l][n]);
+}
+
+void Brain::mutate()
+{
+    for (Layer &layer : layers) {
+        for (Neuron &n : layer) {
+            if (rin(1) > 0.5) {
+                if (rin(1) > 0.5) {
+                    int l = (int)rin(layers.size()-1);
+                    n.addRecipientNeuron(Cell{l, (int)rin(layers[l].size()-1)});
+                }
+                
+                if (rin(1) > 0.5) {
+                    n.removeRandomRecipient();
+                }
+                
+                if (rin(1) > 0.5) {
+                    n.changeThreshold((int)rsign(rin(5)));
+                }
+                
+                break;
             }
         }
     }

@@ -55,3 +55,19 @@ std::vector<Cell> Neuron::getRecipientNeuronAddresses() const
 {
     return recipientNeuronAddresses;
 }
+
+void Neuron::removeRandomRecipient()
+{
+    if (recipientNeuronAddresses.size() == 0) return;
+    recipientNeuronAddresses.erase(recipientNeuronAddresses.begin()+(int)rin(recipientNeuronAddresses.size()-1));
+}
+
+void Neuron::changeThreshold(int change)
+{
+    int nue = threshold + change;
+    if (nue < 1) {
+        threshold = 1;
+        return;
+    }
+    threshold = nue;
+}
