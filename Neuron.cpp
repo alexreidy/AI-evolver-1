@@ -10,7 +10,6 @@
 
 Neuron::Neuron(int threshold)
 {
-    std::cout << threshold << std::endl;
     this->threshold = threshold;
 }
 
@@ -37,6 +36,11 @@ void Neuron::receiveImpulse()
     impulses++;
 }
 
+void Neuron::inhibit()
+{
+    impulses--;
+}
+
 bool Neuron::tryFire()
 {
     if (impulses > threshold) {
@@ -56,18 +60,39 @@ std::vector<Cell> Neuron::getRecipientNeuronAddresses() const
     return recipientNeuronAddresses;
 }
 
+void Neuron::addNeuronToInhibit(Cell address)
+{
+    neuronsToInhibit.push_back(address);
+}
+
+std::vector<Cell> Neuron::getNeuronsToInhibit() const
+{
+    return neuronsToInhibit;
+}
+
 void Neuron::removeRandomRecipient()
 {
-    if (recipientNeuronAddresses.size() == 0) return;
-    recipientNeuronAddresses.erase(recipientNeuronAddresses.begin()+(int)rin(recipientNeuronAddresses.size()-1));
+    if (rin(1) > 0.5) {
+        if (recipientNeuronAddresses.size() == 0)
+            return;
+        recipientNeuronAddresses.erase(
+            recipientNeuronAddresses.begin() +
+            (int)rin(recipientNeuronAddresses.size()-1)
+        );
+    } else {
+        if (neuronsToInhibit.size() == 0) return;
+        neuronsToInhibit.erase(neuronsToInhibit.begin() +
+            (int)rin(neuronsToInhibit.size()-1));
+    }
+    
 }
 
 void Neuron::changeThreshold(int change)
 {
-    int nue = threshold + change;
-    if (nue < 1) {
+    int nt = threshold + change;
+    if (nt < 1) {
         threshold = 1;
         return;
     }
-    threshold = nue;
+    threshold = nt;
 }

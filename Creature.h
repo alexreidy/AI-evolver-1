@@ -17,20 +17,15 @@ public:
     Creature(Vector2 position);
     ~Creature();
     
-    Brain brain = Brain(10, 8);
+    Brain brain = Brain(25, 8);
     
     void update();
     
-    void changeHp(int change);
-    int getHp() const;
+    Vector2 mpos, closestBulletPos, closestCoinPos;
     
-    // Sensory input
-    
-    Vector2 mpos, closestBulletPos;
+    int score = 0;
     
 private:
-    
-    int hp = 100;
 };
 
 #endif /* defined(__AI_EVO_1__Creature__) */

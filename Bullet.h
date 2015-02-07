@@ -18,7 +18,7 @@ public:
     ~Bullet();
     
     void update();
-    
+
 };
 
 #endif /* defined(__AI_EVO_1__Bullet__) */

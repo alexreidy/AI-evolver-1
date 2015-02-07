@@ -41,7 +41,10 @@ Brain::Brain(int numInputNeurons, int numOutputNeurons)
         for (int a = 0; a < layers[l].size(); a++) {
             for (int b = 0; b < layers[l + 1].size(); b++) {
                 if (rin(1) > 0.9) {
-                    layers[l][a].addRecipientNeuron(Cell{l+1, b});
+                    if (rin(1) > 0.5)
+                        layers[l][a].addRecipientNeuron(Cell{l+1, b});
+                    else
+                        layers[l][a].addNeuronToInhibit(Cell{l+1, b});
                 }
             }
         }
@@ -60,6 +63,10 @@ void Brain::deliverImpulsesFrom(Neuron n)
 {
     for (Cell recipient : n.getRecipientNeuronAddresses()) {
         layers[recipient.row][recipient.col].receiveImpulse();
+    }
+    
+    for (Cell recipient : n.getNeuronsToInhibit()) {
+        layers[recipient.row][recipient.col].inhibit();
     }
 }
 
@@ -86,17 +93,19 @@ void Brain::mutate()
 {
     for (Layer &layer : layers) {
         for (Neuron &n : layer) {
-            if (rin(1) > 0.5) {
+            if (rin(1) > 0.7) {
                 if (rin(1) > 0.5) {
                     int l = (int)rin(layers.size()-1);
-                    n.addRecipientNeuron(Cell{l, (int)rin(layers[l].size()-1)});
+                    Cell c = Cell{l, (int)rin(layers[l].size()-1)};
+                    if (rin(1) > 0.5) n.addRecipientNeuron(c);
+                    else n.addNeuronToInhibit(c);
                 }
                 
-                if (rin(1) > 0.5) {
+                if (rin(1) > 0.8) {
                     n.removeRandomRecipient();
                 }
                 
-                if (rin(1) > 0.5) {
+                if (rin(1) > 0.7) {
                     n.changeThreshold((int)rsign(rin(5)));
                 }
                 

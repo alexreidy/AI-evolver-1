@@ -19,6 +19,7 @@ public:
     ~Neuron();
     
     void receiveImpulse();
+    void inhibit();
     
     void fire();
     
@@ -26,6 +27,9 @@ public:
     
     void addRecipientNeuron(Cell address);
     std::vector<Cell> getRecipientNeuronAddresses() const;
+    
+    void addNeuronToInhibit(Cell address);
+    std::vector<Cell> getNeuronsToInhibit() const;
     
     void removeRandomRecipient();
     
@@ -35,7 +39,7 @@ public:
     void changeThreshold(int change);
     
 private:
-    std::vector<Cell> recipientNeuronAddresses;
+    std::vector<Cell> recipientNeuronAddresses, neuronsToInhibit;
     
     int threshold = 2, impulses = 0;
     

@@ -53,18 +53,16 @@ void Creature::update()
         }
     }
     
+    if (getPosition().x < 30) brain.fireInputNeuron(5);
+    if (getPosition().x > 800-30) brain.fireInputNeuron(6);
+    if (getPosition().y < 30) brain.fireInputNeuron(7);
+    if (getPosition().y > 650-30) brain.fireInputNeuron(8);
+    
+    /*
+    if (closestCoinPos.x > getPosition().x) brain.fireInputNeuron(9);
+    if (closestCoinPos.x < getPosition().x) brain.fireInputNeuron(10);
+    if (closestCoinPos.y > getPosition().y) brain.fireInputNeuron(11);
+    if (closestCoinPos.y < getPosition().y) brain.fireInputNeuron(12);
+    */
     brain.fireExcitedNeurons();
-}
-
-void Creature::changeHp(int change)
-{
-    int nhp = hp + change;
-    if (nhp > 100) { hp = 100; return; }
-    if (nhp < 0) { hp = 0; return; }
-    hp = nhp;
-}
-
-int Creature::getHp() const
-{
-    return hp;
 }
